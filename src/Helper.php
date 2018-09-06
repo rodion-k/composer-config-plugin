@@ -80,6 +80,8 @@ class Helper
             $res = strtr($res, $subs);
         }
 
+        $res = preg_replace("/'%env\((.*)\)%'/", '\$_ENV["$1"]', $res);
+
         return $res;
     }
 

@@ -10,6 +10,8 @@
 
 namespace hiqdev\composer\config\readers;
 
+use hiqdev\composer\config\configs\Env;
+
 /**
  * PhpReader - reads PHP files.
  *
@@ -22,6 +24,13 @@ class PhpReader extends AbstractReader
         /// Expose variables to be used in configs
         extract($this->builder->getVars());
 
-        return require $__path;
+        $originEnv = $_ENV;
+        $_ENV = new Env();
+
+        $return = require $__path;
+
+        $_ENV = $originEnv;
+
+        return $return;
     }
 }
